@@ -477,23 +477,48 @@ Jelaskan:
 
 // Start server and handle Vite middleware
 async function startServer() {
+  // Local development
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
+
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(
+        `PT Pegadaian Area Ambon Lead Profiler server running on http://0.0.0.0:${PORT}`
+      );
     });
+
+    return;
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`PT Pegadaian Area Ambon Lead Profiler server running on http://0.0.0.0:${PORT}`);
+  // Production / local production mode
+  const distPath = path.join(process.cwd(), 'dist');
+
+  app.use(express.static(distPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
   });
+
+  // Vercel handles the HTTP server.
+  // Only listen when running outside Vercel.
+  if (process.env.VERCEL !== '1') {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(
+        `PT Pegadaian Area Ambon Lead Profiler server running on http://0.0.0.0:${PORT}`
+      );
+    });
+  }
 }
 
-startServer();
+// Export Express app for Vercel Serverless Functions
+export default app;
+
+// Start the local server only when not running on Vercel
+if (process.env.VERCEL !== '1') {
+  startServer();
+}
