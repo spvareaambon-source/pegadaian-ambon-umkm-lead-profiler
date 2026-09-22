@@ -1,5 +1,5 @@
 import { BusinessLead, LeadPlatform, PegadaianProduct } from '../types';
-import { calculateHaversineDistanceKm } from '../data/ambonGeoConfig';
+import { calculateHaversineDistanceKm } from '../data/ambonGeoConfig.js';
 
 interface ScrapeRadiusParams {
   keyword?: string;
@@ -479,3 +479,4 @@ export async function scrapeLiveSocialMedia(params: ScrapeRadiusParams): Promise
     return [];
   }
 }
+
