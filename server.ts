@@ -3,14 +3,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { GoogleGenAI, Type } from '@google/genai';
-import { queryVerifiedAmbonDirectory } from './src/data/ambonRealPlaces';
-import { queryVerifiedSocialMediaLeads, VERIFIED_AMBON_SOCIAL_LEADS } from './src/data/ambonSocialMediaLeads';
+import { queryVerifiedAmbonDirectory } from './src/data/ambonRealPlaces.js';
+import { queryVerifiedSocialMediaLeads, VERIFIED_AMBON_SOCIAL_LEADS } from './src/data/ambonSocialMediaLeads.js';
 import { 
   scrapeSerperGoogleMaps, 
   scrapeOverpassLiveRadius, 
   scrapeLiveSocialMedia 
-} from './src/server/realtimeScraper';
-import { calculateHaversineDistanceKm } from './src/data/ambonGeoConfig';
+} from './src/server/realtimeScraper.js';
+import { calculateHaversineDistanceKm } from './src/data/ambonGeoConfig.js';
 
 dotenv.config();
 
@@ -522,4 +522,5 @@ export default app;
 if (process.env.VERCEL !== '1') {
   startServer();
 }
+
 
