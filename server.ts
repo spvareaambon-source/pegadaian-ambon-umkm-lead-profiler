@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { GoogleGenAI, Type } from '@google/genai';
-import { createServer as createViteServer } from 'vite';
 import { queryVerifiedAmbonDirectory } from './src/data/ambonRealPlaces';
 import { queryVerifiedSocialMediaLeads, VERIFIED_AMBON_SOCIAL_LEADS } from './src/data/ambonSocialMediaLeads';
 import { 
@@ -479,7 +478,8 @@ Jelaskan:
 async function startServer() {
   // Local development
   if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
+    const { createServer: createViteServer } = await import('vite');
+      const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
@@ -522,3 +522,4 @@ export default app;
 if (process.env.VERCEL !== '1') {
   startServer();
 }
+
