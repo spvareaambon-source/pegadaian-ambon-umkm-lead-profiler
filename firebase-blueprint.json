@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role and access details for Pegadaian Ambon system",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "officer", "supervisor"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "BusinessLead": {
+      "title": "BusinessLead",
+      "description": "Business lead profile in Kota Ambon tracked in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "namaUsaha": { "type": "string" },
+        "kategori": { "type": "string" },
+        "kecamatan": { "type": "string" },
+        "alamatLengkap": { "type": "string" },
+        "produkRekomendasi": { "type": "string" },
+        "statusKontak": { "type": "string", "enum": ["Belum Dihubungi", "Terkirim", "Merespon", "Closing"] },
+        "catatanSales": { "type": "string" },
+        "skorKelayakan": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "namaUsaha", "statusKontak"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile collection"
+    },
+    "/leads/{leadId}": {
+      "schema": "BusinessLead",
+      "description": "Shared business leads for Pegadaian Area Ambon officers"
+    }
+  }
+}
